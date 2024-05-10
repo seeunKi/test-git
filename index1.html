@@ -6,9 +6,32 @@
     <title>테이블(표)</title>
     <style>
         tfoot{background-color:beige;}
+      .nav {
+      height: 87px;
+      border-bottom: 5px solid black;
+      display: flex;
+      align-items: center;
+    }
+
+      .nav-right-items {
+      display: flex;
+      margin-left: auto;
+    }
+
+      .nav-item{
+      margin-left: 10px;
+    }
     </style>
 </head>
 <body>
+  <div class="nav">
+    <div class="nav-right-items">
+  </div>
+    <div class="nav-item">Logout</div>
+    <div class="nav-item">현재 배송현황</div>
+    <div class="nav-item">고객센터</div>
+    <div class="nav-item">자주하는 질문</div>
+  </div>
     <h1>배송현황</h1>
     
     <table border="1" width="877" height="300" cellpadding="10">

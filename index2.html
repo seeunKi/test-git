@@ -3,12 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테이블(표)</title>
+    <title>All My Boxes</title>
     <style>
         tfoot{background-color:beige;}
+        .nav {
+      height: 87px;
+      border-bottom: 5px solid black;
+      display: flex;
+      align-items: center;
+    }
+
+      .nav-right-items {
+      display: flex;
+      margin-left: auto;
+    }
+
+      .nav-item{
+      margin-left: 10px;
+    }
     </style>
 </head>
 <body>
+    <div class="nav">
+        <div class="nav-right-items">
+    
+        </div>
+        <div class="nav-item">Logout</div>
+        <div class="nav-item">배송현황</div>
+        <div class="nav-item">고객센터</div>
+        <div class="nav-item">자주하는 질문</div>
+      </div>
     <h1>이전 배송목록</h1>
     
     <table border="1" width="1100" height="500" cellpadding="10">
