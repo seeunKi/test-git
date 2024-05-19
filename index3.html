@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>form</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .Login {
+            width: 550px; 
+        }
+
+        .Login hr {
+            border: none;
+            border-top: 7px solid #000000; 
+            margin: 20px 0; 
+        }
+
+        input[type="checkbox"] {
+            display: inline-block;
+            margin-right: 10px; 
+        }
+
+        input[type="submit"] {
+            padding: 15px 30px; 
+            font-size: 18px; 
+            background-color: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: background-color 0.3s; 
+            width: 100%;
+            margin-top: 20px; 
+        }
+
+        input[type="submit"]:hover {
+            background-color: #080879; 
+        }
+    </style>
+</head>
+<body>
+<div class="Login">
+    <h1>회원가입</h1>
+    <form>
+        <hr>
+        <dl>
+            <dt>아이디</dt>
+            <dd><input type="text" placeholder="아이디 입력"></dd>
+        </dl>
+        <dl>
+            <dt>비밀번호</dt>
+            <dd><input type="password" placeholder="비밀번호 입력"></dd>
+        </dl>
+        <dl>
+            <dt>비밀번호 확인</dt>
+            <dd><input type="password" placeholder="비밀번호 재입력"></dd>
+        </dl>
+        <dl>
+            <dt>이름</dt>
+            <dd><input type="text" placeholder="이름 입력"></dd>
+        </dl>
+        <dl>
+            <dt>연락처</dt>
+            <dd><input type="tel" placeholder="연락처 입력"></dd>
+        </dl>
+        <dl>
+            <dt>이메일</dt>
+            <dd>
+                <input type="email" placeholder="이메일 입력"> @
+                <select>
+                    <option>gmail.com</option>
+                    <option>naver.com</option>
+                    <option>daum.net</option>
+                    <option>kakao.com</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt>주소</dt>
+            <dd><input type="button" value="주소 찾기"></dd>
+        </dl>
+        <dl>
+            <dt>연결하고자 하는 택배사</dt>
+            <dd>
+                <input type="checkbox" id="f1">
+                <label for="f1">대한통운</label>
+                <input type="checkbox" id="f2">
+                <label for="f2">우체국택배</label>
+                <br> 
+                <input type="checkbox" id="f3">
+                <label for="f3">롯데택배</label>
+                <input type="checkbox" id="f4">
+                <label for="f4">한진택배</label>
+                <br> 
+                <input type="checkbox" id="f5">
+                <label for="f5">로젠택배</label>
+                <input type="checkbox" id="f6">
+                <label for="f6">경동택배</label>
+            </dd>
+        </dl>
+        <input type="submit" value="회원가입">
+    </form>
+</div>
