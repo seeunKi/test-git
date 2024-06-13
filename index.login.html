@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> 로그인 창 만들기 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>replit</title>
+    <style>
+        h1 {
+            text-align: left;
+        }
+        
+        hr {
+            border: 3px solid black;
+            width: 28%;
+            margin-bottom: 20px;
+            margin-left: 0;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-top: 20px;
+        }
+        
+        .label-id {
+            margin-right: 67px;
+        }
+        
+        .label-password {
+            margin-right: 15px;
+        }
+        
+        .checkbox-label {
+            margin-left: 5px;
+            font-size: 0.9em;
+        }
+        
+        .forgot-password {
+            margin-left: 15px;
+            font-size: 0.9em;
+            color: blue;
+            cursor: pointer;
+        }
+        
+        input[type="submit"] {
+            padding: 10px 140px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: blue;
+            color: white;
+            border: none;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1> 로그인 </h1>
+    <hr>
+    <span class="label-id">ID</span> <input type="text" name="id" placeholder="아이디를 입력해주세요." size="30"><br>
+    <span class="label-password">password</span> <input type="password" name="password" placeholder="비밀번호를 입력해주세요." size="30"><br>
+    <input type="checkbox" id="auto-login">
+    <label class="checkbox-label" for="auto-login">자동 로그인</label>
+    <span class="forgot-password">아이디/비밀번호를 잃어버렸나요?</span>
+    <p>
+        <input type="submit" name="login" value="로그인">
+    </p>
+</body>
+
+</html>

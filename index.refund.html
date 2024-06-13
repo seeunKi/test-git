@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
             margin: 0;
             padding: 0;
         }
+        
         .nav {
             height: 87px;
             border-bottom: 5px solid black;
@@ -18,14 +20,17 @@
             padding: 0 20px;
             background-color: #f8f8f8;
         }
+        
         .nav-right-items {
             display: flex;
             margin-left: auto;
         }
+        
         .nav-item {
             margin-left: 10px;
             cursor: pointer;
         }
+        
         .container {
             max-width: 800px;
             margin: 50px auto;
@@ -34,48 +39,58 @@
             border-radius: 8px;
             background-color: #f9f9f9;
         }
+        
         h1 {
             text-align: center;
             color: #333;
         }
+        
         form {
             display: flex;
             flex-direction: column;
         }
+        
         label {
             margin-top: 15px;
             font-size: 16px;
         }
-        input[type="text"], textarea, select {
+        
+        input[type="text"],
+        textarea,
+        select {
             padding: 10px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
         }
+        
         textarea {
             resize: vertical;
             height: 100px;
         }
+        
         button {
             padding: 15px;
             margin-top: 20px;
-            background-color: #007bff; 
+            background-color: #007bff;
             border: none;
             border-radius: 4px;
             color: white;
             font-size: 16px;
             cursor: pointer;
         }
+        
         button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="nav">
         <div class="nav-right-items">
-            <div class="nav-item">Logout</div> 
+            <div class="nav-item">Logout</div>
             <div class="nav-item">현재 배송현황</div>
             <div class="nav-item">고객센터</div>
             <div class="nav-item">자주하는 질문</div>
@@ -106,18 +121,18 @@
 
     <script>
         document.getElementById('refundForm').addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            var product = document.getElementById('product').value;
-            var reason = document.getElementById('reason').value;
-            var orderNumber = document.getElementById('orderNumber').value;
+                    event.preventDefault();
+                    var product = document.getElementById('product').value;
+                    var reason = document.getElementById('reason').value;
+                    var orderNumber = document.getElementById('orderNumber').value;
 
-            console.log('제품:', product);
-            console.log('환불 사유:', reason);
-            console.log('주문 번호:', orderNumber);
+                    console.log('제품:', product);
+                    console.log('환불 사유:', reason);
+                    console.log('주문 번호:', orderNumber);
 
-            alert('환불 요청이 제출되었습니다!');
-        });
+                    alert('환불 요청이 제출되었습니다!');
+                }
     </script>
 </body>
-</html>
 
+</html>

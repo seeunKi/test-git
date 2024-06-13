@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배송현황</title>
+    <style>
+        tfoot {
+            background-color: beige;
+        }
+        
+        .nav {
+            height: 87px;
+            border-bottom: 5px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            /* 상단 메뉴 글자 오른쪽 정렬 */
+        }
+        
+        .nav-item {
+            margin-left: 10px;
+        }
+        
+        .criteria {
+            margin-top: 20px;
+            /* 위쪽 공간 */
+            margin-bottom: 20px;
+            /* 아래쪽 공간 */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* '정렬기준'을 왼쪽 정렬 */
+        }
+        
+        .criteria span {
+            margin-right: 10px;
+            font-size: 20px;
+            /* 글자 크기 증가 */
+            font-weight: bold;
+            /* 글자 굵게 */
+        }
+        
+        .criteria select {
+            font-size: 16px;
+            /* 드롭다운 글자 크기 */
+            padding: 5px;
+            /* 드롭다운 내부 여백 */
+        }
+        
+        .location-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .location-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s;
+        }
+        
+        .location-option.selected {
+            background-color: #e0f7fa;
+        }
+        
+        .location-option span {
+            margin-left: 5px;
+            font-size: 18px;
+        }
+        
+        .delivery-table {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            /* 테이블 크기를 조정 */
+            margin: 20px 0;
+            /* 테이블 위아래 간격 */
+            text-align: left;
+            /* 테이블 왼쪽 정렬 */
+        }
+        
+        .filtered-table {
+            display: none;
+            /* 필터링된 테이블 초기 상태 */
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <div class="nav-item">Logout</div>
+        <div class="nav-item">현재 배송현황</div>
+        <div class="nav-item">고객센터</div>
+        <div class="nav-item">자주하는 질문</div>
+    </div>
+    <h1 style="text-align: left; margin-top: 20px;">배송현황</h1>
+
+    <div class="criteria">
+        <span>정렬기준</span>
+        <select id="sortingCriteria" onchange="updateOptions()">
+            <option value="arrival-time">도착시간</option>
+            <option value="arrival-location">도착장소</option>
+        </select>
+    </div>
+
+    <div class="location-options" id="locationOptions" style="display: none;">
+        <div class="location-option" onclick="filterTableByLocation('집')">
+            <input type="radio" name="location" id="location-home" value="집">
+            <span>집</span>
+        </div>
+        <div class="location-option" onclick="filterTableByLocation('회사')">
+            <input type="radio" name="location" id="location-office" value="회사">
+            <span>회사</span>
+        </div>
+        <div class="location-option" onclick="filterTableByLocation('연구실')">
+            <input type="radio" name="location" id="location-lab" value="연구실">
+            <span>연구실</span>
+        </div>
+    </div>
+
+    <table id="deliveryTable" class="delivery-table" border="1" width="877" height="300" cellpadding="10">
+        <thead>
+            <tr>
+                <td>배송날짜</td>
+                <td>도착시간</td>
+                <td>도착장소 및 택배사 정보</td>
+                <td>상품목록</td>
+                <td>배송현황</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2024-06-13</td>
+                <td>17시 이내</td>
+                <td>집 / 대한통운</td>
+                <td>상품100</td>
+                <td>배송 중</td>
+            </tr>
+            <tr>
+                <td>2024-06-13</td>
+                <td>15시 이내</td>
+                <td>회사 / 우체국택배</td>
+                <td>상품99</td>
+                <td>배송 중</td>
+            </tr>
+            <tr>
+                <td>2024-06-13</td>
+                <td>8시 이내</td>
+                <td>연구실 / 대한통운</td>
+                <td>상품98</td>
+                <td>배송 중</td>
+            </tr>
+            <tr>
+                <td>2024-06-13</td>
+                <td>17시 이내</td>
+                <td>집 / 우체국택배</td>
+                <td>상품97</td>
+                <td>배송 중</td>
+            </tr>
+            <tr>
+                <td>2024-06-13</td>
+                <td>15시 이내</td>
+                <td>회사 / 대한통운</td>
+                <td>상품96</td>
+                <td>배송 중</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table border="1" class="delivery-table" cellpadding="10">
+        <tfoot>
+            <tr>
+                <td>배송날짜</td>
+                <td>도착장소 및 택배사 정보</td>
+                <td>상품목록</td>
+                <td>리뷰링크</td>
+                <td>환불링크</td>
+                <td>교환링크</td>
+            </tr>
+            <tr>
+                <td>2024-06-12</td>
+                <td>집 / 우체국택배</td>
+                <td>상품95</td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.review.html">리뷰링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.refund.html">환불링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.exchange.html">교환링크</a></td>
+            </tr>
+            <tr>
+                <td>2024-06-11</td>
+                <td>연구실 / 대한통운</td>
+                <td>상품94</td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.review.html">리뷰링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.refund.html">환불링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.exchange.html">교환링크</a></td>
+            </tr>
+            <tr>
+                <td>2024-06-10</td>
+                <td>회사 / 우체국택배</td>
+                <td>상품93</td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.review.html">리뷰링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.refund.html">환불링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.exchange.html">교환링크</a></td>
+            </tr>
+            <tr>
+                <td>2024-06-09</td>
+                <td>집 / 대한통운</td>
+                <td>상품92</td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.review.html">리뷰링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.refund.html">환불링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.exchange.html">교환링크</a></td>
+            </tr>
+            <tr>
+                <td>2024-06-08</td>
+                <td>회사 / 대한통운</td>
+                <td>상품91</td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.review.html">리뷰링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.refund.html">환불링크</a></td>
+                <td><a href="http://127.0.0.1:5500/test-git/index.exchange.html">교환링크</a></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- 필터링된 결과를 표시할 테이블 -->
+    <table id="filteredTable" class="filtered-table" border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <td>배송날짜</td>
+                <td>도착시간</td>
+                <td>도착장소 및 택배사 정보</td>
+                <td>상품목록</td>
+                <td>배송현황</td>
+            </tr>
+        </thead>
+        <tbody id="filteredTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        // 정렬 기준을 변경할 때 호출되는 함수
+        function updateOptions() {
+            var criteria = document.getElementById("sortingCriteria").value;
+            var locationOptions = document.getElementById("locationOptions");
+            var deliveryTable = document.getElementById("deliveryTable");
+            var filteredTable = document.getElementById("filteredTable");
+
+            if (criteria === "arrival-location") {
+                locationOptions.style.display = "flex"; // 도착장소 필터 옵션을 표시
+                deliveryTable.style.display = "none"; // 기존 테이블 숨김
+                filteredTable.style.display = "none"; // 필터링된 테이블 숨김
+            } else {
+                locationOptions.style.display = "none"; // 도착장소 필터 옵션 숨김
+                deliveryTable.style.display = "table"; // 기존 테이블 표시
+                filteredTable.style.display = "none"; // 필터링된 테이블 숨김
+                sortTable(); // 테이블을 정렬 기준에 맞게 정렬
+            }
+        }
+
+        // 도착장소를 필터링하는 함수
+        function filterTableByLocation(location) {
+            var table = document.getElementById("deliveryTable");
+            var rows = Array.from(table.querySelectorAll("tbody tr"));
+            var filteredTableBody = document.getElementById("filteredTableBody");
+
+            // 이전의 필터링된 내용을 지움
+            filteredTableBody.innerHTML = '';
+
+            // 선택된 장소에 맞는 행을 필터링하여 추가
+            rows.forEach(function(row) {
+                var cellLocation = row.cells[2].innerText.split(" / ")[0].trim();
+                if (cellLocation === location) {
+                    filteredTableBody.appendChild(row.cloneNode(true));
+                }
+            });
+
+            // 필터링된 테이블을 표시
+            document.getElementById("filteredTable").style.display = 'table';
+        }
+
+        // 테이블을 정렬하는 함수
+        function sortTable() {
+            var table = document.getElementById("deliveryTable");
+            var tbody = table.tBodies[0];
+            var rows = Array.from(tbody.rows);
+
+            var sortingCriteria = document.getElementById("sortingCriteria").value;
+
+            if (sortingCriteria === "arrival-time") {
+                rows.sort(function(a, b) {
+                    var timeA = convertTimeToNumber(a.cells[1].innerText);
+                    var timeB = convertTimeToNumber(b.cells[1].innerText);
+                    return timeA - timeB;
+                });
+            } else if (sortingCriteria === "arrival-location") {
+                rows.sort(function(a, b) {
+                    var locationA = a.cells[2].innerText.split(" / ")[0].trim();
+                    var locationB = b.cells[2].innerText.split(" / ")[0].trim();
+                    return locationA.localeCompare(locationB);
+                });
+            }
+
+            // 정렬된 행을 다시 추가
+            rows.forEach(function(row) {
+                tbody.appendChild(row);
+            });
+        }
+
+        // 도착 시간을 숫자로 변환하는 함수
+        function convertTimeToNumber(timeStr) {
+            // "17시 이내"를 숫자로 변환하여 비교
+            return parseInt(timeStr.replace("시 이내", "").trim());
+        }
+
+        // 페이지 로드 시, 두 번째 테이블을 최근 날짜 순으로 정렬하는 함수
+        window.onload = function() {
+            var table = document.querySelector("tfoot");
+            var rows = Array.from(table.querySelectorAll("tr")).slice(1); // 헤더 행 제외
+
+            rows.sort(function(a, b) {
+                var dateA = new Date(a.cells[0].innerText);
+                var dateB = new Date(b.cells[0].innerText);
+                return dateB - dateA; // 최신 날짜가 먼저 오도록 정렬
+            });
+
+            // 정렬된 행을 다시 추가
+            rows.forEach(function(row) {
+                table.appendChild(row);
+            });
+        }
+    </script>
+</body>
+
+</html>
