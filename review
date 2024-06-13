@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 작성</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav {
+            height: 87px;
+            border-bottom: 5px solid black;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            background-color: #f8f8f8;
+        }
+        
+        .nav-right-items {
+            display: flex;
+            margin-left: auto;
+            gap: 20px;
+        }
+        
+        .nav-item {
+            cursor: pointer;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        
+        input[type="text"],
+        textarea,
+        select {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            width: 150px;
+            margin-top: 5px;
+        }
+        
+        .rating input {
+            display: none;
+        }
+        
+        .rating label {
+            font-size: 24px;
+            cursor: pointer;
+            color: #ccc;
+        }
+        
+        .rating input:checked~label,
+        .rating label:hover,
+        .rating label:hover~label {
+            color: #ffcc00;
+        }
+        
+        button {
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .photos-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .photos-preview img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <div class="nav-right-items">
+            <div class="nav-item">Logout</div>
+            <div class="nav-item">현재 배송현황</div>
+            <div class="nav-item">고객센터</div>
+            <div class="nav-item">자주하는 질문</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>리뷰 작성</h1>
+        <form id="reviewForm">
+            <label for="product">제품 선택:</label>
+            <select id="product" name="product">
+                <option value="product1">상품91</option>
+                <option value="product2">상품92</option>
+                <option value="product3">상품93</option>
+                <option value="product4">상품94</option>
+                <option value="product5">상품95</option>
+            </select>
+
+            <label for="review">리뷰 내용:</label>
+            <textarea id="review" name="review"></textarea>
+
+            <label for="rating">별점 평가:</label>
+            <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+            </div>
+
+            <label for="photos">사진 추가 (최대 5개):</label>
+            <input type="file" id="photos" name="photos" accept="image/*" multiple>
+
+            <div class="photos-preview" id="photosPreview"></div>
+
+            <button type="submit">리뷰 제출</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('reviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var product = document.getElementById('product').value;
+            var review = document.getElementById('review').value;
+            var rating = document.querySelector('input[name="rating"]:checked').value;
+            var photos = document.getElementById('photos').files;
+
+            console.log('제품:', product);
+            console.log('리뷰 내용:', review);
+            console.log('별점 평가:', rating);
+            console.log('사진 수:', photos.length);
+            for (var i = 0; i < photos.length; i++) {
+                console.log('사진 ' + (i + 1) + ':', photos[i].name);
+            }
+
+            alert('리뷰가 제출되었습니다!');
+        });
+
+        document.getElementById('photos').addEventListener('change', function() {
+            var photosPreview = document.getElementById('photosPreview');
+            photosPreview.innerHTML = '';
+
+            var files = this.files;
+            if (files.length > 5) {
+                alert('최대 5개의 사진만 추가할 수 있습니다.');
+                this.value = '';
+                return;
+            }
+
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    photosPreview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+
+</html>
